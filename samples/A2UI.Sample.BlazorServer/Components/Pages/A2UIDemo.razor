@@ -18,7 +18,7 @@
         @foreach (var msg in _messages)
         {
             <div class="message @msg.Role">
-                <div class="message-content">
+                <div class="message-content @(msg.SurfaceId != null ? "is-ui" : "")">
                     @if (msg.Role == "user")
                     {
                         <div class="user-message">
@@ -267,7 +267,7 @@
 
 <style>
     .chat-container {
-        max-width: 900px;
+        max-width: 98%;
         margin: 0 auto;
         height: 100vh;
         display: flex;
@@ -329,6 +329,14 @@
 
     .message-content {
         max-width: 80%;
+    }
+
+    .message.agent .message-content {
+        max-width: 100%;
+    }
+
+    .message-content.is-ui {
+        max-width: 70%;
     }
 
     .user-message {
