@@ -40,13 +40,7 @@
               "child": "open-btn-text",
               "primary": true,
               "action": { 
-                "name": "open_modal",
-                "updates": [
-                  {
-                    "path": "ui/modalOpen",
-                    "value": true
-                  }
-                ]
+                "name": "open_modal"
               }
             }
           }

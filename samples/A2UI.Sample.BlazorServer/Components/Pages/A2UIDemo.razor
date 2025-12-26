@@ -1,5 +1,6 @@
 @page "/a2ui-demo"
 @using A2UI.Core.Processing
+@using A2UI.Core.Messages
 @using A2UI.Sample.BlazorServer.Services
 @rendermode InteractiveServer
 @inject A2AClientService A2AClient
@@ -172,6 +173,16 @@
     {
         _lastAction = $"{e.Action.Name} (来自 {e.Action.SourceComponentId})";
         
+        Console.WriteLine($"[Demo] OnUserAction: {e.Action.Name}");
+        
+        // Handle UI-only actions locally (don't send to Agent)
+        if (HandleLocalAction(e.Action))
+        {
+            Console.WriteLine($"[Demo] Action {e.Action.Name} handled locally");
+            StateHasChanged();
+            return;
+        }
+        
         // Send action name directly to agent for keyword matching
         var actionQuery = e.Action.Name;
         if (e.Action.Context != null && e.Action.Context.Count > 0)
@@ -182,6 +193,43 @@
         
         await SendQuery(actionQuery);
         StateHasChanged();
+    }
+
+    /// <summary>
+    /// Handles actions that only affect UI state (like opening/closing modals)
+    /// Returns true if the action was handled locally
+    /// </summary>
+    private bool HandleLocalAction(UserActionMessage action)
+    {
+        switch (action.Name)
+        {
+            case "open_modal":
+                // Update the data model to open the modal
+                var openUpdate = EventDispatcher.CreateDataUpdate(
+                    action.SurfaceId,
+                    action.SourceComponentId,
+                    "ui/modalOpen",
+                    true
+                );
+                EventDispatcher.DispatchDataUpdate(openUpdate);
+                return true;
+
+            case "close_modal":
+            case "confirm_action":
+            case "cancel_action":
+                // Close the modal
+                var closeUpdate = EventDispatcher.CreateDataUpdate(
+                    action.SurfaceId,
+                    action.SourceComponentId,
+                    "ui/modalOpen",
+                    false
+                );
+                EventDispatcher.DispatchDataUpdate(closeUpdate);
+                return true;
+
+            default:
+                return false;
+        }
     }
 
     private async Task HandleKeyPress(KeyboardEventArgs e)
