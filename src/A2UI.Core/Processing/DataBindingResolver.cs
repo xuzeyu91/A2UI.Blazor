@@ -20,20 +20,15 @@ public class DataBindingResolver
     /// </summary>
     public T? ResolveBoundValue<T>(Dictionary<string, object> boundValue, string surfaceId, string? dataContextPath = null)
     {
-        Console.WriteLine($"[DataBindingResolver.ResolveBoundValue] surfaceId={surfaceId}, dataContextPath={dataContextPath}");
-        Console.WriteLine($"[DataBindingResolver.ResolveBoundValue] boundValue keys: {string.Join(", ", boundValue.Keys)}");
-
         // Check for literal values first
         if (boundValue.TryGetValue("literalString", out var literalString) && literalString != null)
         {
-            Console.WriteLine($"[DataBindingResolver.ResolveBoundValue] Found literalString: {literalString}");
             if (typeof(T) == typeof(string))
                 return (T)literalString;
         }
 
         if (boundValue.TryGetValue("literalNumber", out var literalNumber) && literalNumber != null)
         {
-            Console.WriteLine($"[DataBindingResolver.ResolveBoundValue] Found literalNumber: {literalNumber}");
             if (typeof(T) == typeof(double))
                 return (T)Convert.ChangeType(literalNumber, typeof(T));
             if (typeof(T) == typeof(int))
@@ -42,7 +37,6 @@ public class DataBindingResolver
 
         if (boundValue.TryGetValue("literalBoolean", out var literalBoolean) && literalBoolean != null)
         {
-            Console.WriteLine($"[DataBindingResolver.ResolveBoundValue] Found literalBoolean: {literalBoolean}");
             if (typeof(T) == typeof(bool))
                 return (T)literalBoolean;
         }
@@ -56,22 +50,15 @@ public class DataBindingResolver
             if (pathObj is JsonElement jsonElement && jsonElement.ValueKind == JsonValueKind.String)
             {
                 path = jsonElement.GetString();
-                Console.WriteLine($"[DataBindingResolver.ResolveBoundValue] Found path (from JsonElement): '{path}'");
             }
             else if (pathObj is string pathString)
             {
                 path = pathString;
-                Console.WriteLine($"[DataBindingResolver.ResolveBoundValue] Found path (direct string): '{path}'");
-            }
-            else
-            {
-                Console.WriteLine($"[DataBindingResolver.ResolveBoundValue] ❌ path is not string or JsonElement, type: {pathObj?.GetType().Name ?? "null"}");
             }
 
             if (!string.IsNullOrEmpty(path))
             {
                 var dataValue = _messageProcessor.GetData(surfaceId, path, dataContextPath);
-                Console.WriteLine($"[DataBindingResolver.ResolveBoundValue] GetData returned: {dataValue?.ToString() ?? "null"} (type: {dataValue?.GetType().Name ?? "null"})");
 
                 // If both literal and path are present, set the literal value first (initialization shorthand)
                 if (boundValue.ContainsKey("literalString") ||
@@ -189,82 +176,60 @@ public class DataBindingResolver
         if (contextEntries == null)
             return result;
 
-        Console.WriteLine($"[DataBindingResolver] ResolveActionContext: processing {contextEntries.Count} entries");
-
         foreach (var entry in contextEntries)
         {
-            Console.WriteLine($"[DataBindingResolver] Entry keys: {string.Join(", ", entry.Keys)}");
-            Console.WriteLine($"[DataBindingResolver] Entry JSON: {JsonSerializer.Serialize(entry)}");
-            
-            if (!entry.TryGetValue("key", out var keyObj))
+            if (!entry.TryGetValue("key", out var keyObj) || keyObj is not string key)
             {
-                Console.WriteLine($"[DataBindingResolver] ❌ Entry missing 'key' property");
-                continue;
-            }
-            
-            Console.WriteLine($"[DataBindingResolver] keyObj type: {keyObj?.GetType().FullName ?? "null"}, value: {keyObj}");
-            
-            if (keyObj is not string key)
-            {
-                Console.WriteLine($"[DataBindingResolver] ❌ Key is not string, it's {keyObj?.GetType().Name ?? "null"}");
                 continue;
             }
 
             if (!entry.TryGetValue("value", out var valueObj))
             {
-                Console.WriteLine($"[DataBindingResolver] ❌ Context entry '{key}' missing 'value'");
                 continue;
             }
 
-            Console.WriteLine($"[DataBindingResolver] valueObj type: {valueObj?.GetType().FullName ?? "null"}");
-
-            // Handle JsonElement (from JSON deserialization)
-            Dictionary<string, object>? valueDict = null;
-            
-            if (valueObj is JsonElement jsonElement && jsonElement.ValueKind == JsonValueKind.Object)
-            {
-                try
-                {
-                    valueDict = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonElement.GetRawText());
-                    Console.WriteLine($"[DataBindingResolver] ✓ Deserialized JsonElement to Dictionary");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"[DataBindingResolver] ❌ Failed to deserialize JsonElement for key '{key}': {ex.Message}");
-                    continue;
-                }
-            }
-            else if (valueObj is Dictionary<string, object> dict)
-            {
-                valueDict = dict;
-                Console.WriteLine($"[DataBindingResolver] ✓ Value is already Dictionary");
-            }
-            else
-            {
-                Console.WriteLine($"[DataBindingResolver] ❌ Context entry '{key}' value is not a Dictionary or JsonElement object, type: {valueObj?.GetType().Name ?? "null"}");
-                continue;
-            }
-
+            // Convert to Dictionary if needed
+            var valueDict = ConvertToDictionary(valueObj);
             if (valueDict == null)
                 continue;
 
-            Console.WriteLine($"[DataBindingResolver] valueDict contents: {JsonSerializer.Serialize(valueDict)}");
-
             // Resolve the bound value
             var resolvedValue = ResolveBoundValue<object>(valueDict, surfaceId, dataContextPath);
-            Console.WriteLine($"[DataBindingResolver] ResolveBoundValue returned: {resolvedValue?.ToString() ?? "null"} (type: {resolvedValue?.GetType().Name ?? "null"})");
             if (resolvedValue != null)
             {
                 result[key] = resolvedValue;
-                Console.WriteLine($"[DataBindingResolver] ✓ Resolved context '{key}' = {resolvedValue}");
-            }
-            else
-            {
-                Console.WriteLine($"[DataBindingResolver] ⚠ Context entry '{key}' resolved to null");
             }
         }
 
         return result;
+    }
+
+    /// <summary>
+    /// Converts an object to Dictionary, handling JsonElement if needed.
+    /// </summary>
+    private Dictionary<string, object>? ConvertToDictionary(object? obj)
+    {
+        if (obj == null)
+            return null;
+
+        // Already a dictionary
+        if (obj is Dictionary<string, object> dict)
+            return dict;
+
+        // Handle JsonElement
+        if (obj is JsonElement jsonElement && jsonElement.ValueKind == JsonValueKind.Object)
+        {
+            try
+            {
+                return JsonSerializer.Deserialize<Dictionary<string, object>>(jsonElement.GetRawText());
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        return null;
     }
 }
 

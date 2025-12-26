@@ -28,130 +28,22 @@
 
     private void HandleClick()
     {
-        Console.WriteLine($"[A2UIButton] HandleClick: ComponentId={Component.Id}");
-        
         if (ActionData == null)
         {
-            Console.WriteLine($"[A2UIButton] ActionData is null, returning");
             return;
         }
 
         // Extract action name
         if (!ActionData.TryGetValue("name", out var nameObj) || nameObj is not string actionName)
         {
-            Console.WriteLine($"[A2UIButton] No action name found, returning");
+            Console.WriteLine($"[A2UIButton] Error: No action name found in component {Component.Id}");
             return;
         }
 
-        Console.WriteLine($"[A2UIButton] Action name: {actionName}");
-
-        // Debug: 打印 ActionData 的所有键
-        Console.WriteLine($"[A2UIButton] ActionData keys: {string.Join(", ", ActionData.Keys)}");
-        
         // Resolve context
-        Dictionary<string, object> context = new();
-        if (ActionData.TryGetValue("context", out var contextObj))
-        {
-            Console.WriteLine($"[A2UIButton] Context found, type: {contextObj?.GetType().FullName ?? "null"}");
-            Console.WriteLine($"[A2UIButton] Context value JSON: {JsonSerializer.Serialize(contextObj)}");
-            
-            List<Dictionary<string, object>>? contextEntries = null;
-            
-            // Handle JsonElement (from JSON deserialization)
-            if (contextObj is JsonElement jsonElement)
-            {
-                Console.WriteLine($"[A2UIButton] Context is JsonElement, ValueKind: {jsonElement.ValueKind}");
-                
-                if (jsonElement.ValueKind == JsonValueKind.Array)
-                {
-                    try
-                    {
-                        contextEntries = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(jsonElement.GetRawText());
-                        Console.WriteLine($"[A2UIButton] ✓ Deserialized JsonElement array, count: {contextEntries?.Count ?? 0}");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"[A2UIButton] ❌ Failed to deserialize JsonElement: {ex.Message}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"[A2UIButton] ❌ Context JsonElement is not an array, it's {jsonElement.ValueKind}");
-                }
-            }
-            // Handle List<object> (common case from JSON deserialization)
-            else if (contextObj is System.Collections.IList list)
-            {
-                Console.WriteLine($"[A2UIButton] Context is IList, count: {list.Count}");
-                try
-                {
-                    // Re-serialize and deserialize to get proper types
-                    var json = JsonSerializer.Serialize(list);
-                    Console.WriteLine($"[A2UIButton] JSON to deserialize: {json}");
-                    
-                    // Use JsonDocument to properly handle the nested structure
-                    using var doc = JsonDocument.Parse(json);
-                    var array = doc.RootElement;
-                    
-                    contextEntries = new List<Dictionary<string, object>>();
-                    
-                    foreach (var item in array.EnumerateArray())
-                    {
-                        var entry = new Dictionary<string, object>();
-                        
-                        foreach (var prop in item.EnumerateObject())
-                        {
-                            // Convert JsonElement to appropriate CLR type
-                            object value = prop.Value.ValueKind switch
-                            {
-                                JsonValueKind.String => prop.Value.GetString()!,
-                                JsonValueKind.Number => prop.Value.GetDouble(),
-                                JsonValueKind.True => true,
-                                JsonValueKind.False => false,
-                                JsonValueKind.Object => prop.Value.Clone(), // Keep as JsonElement for nested objects
-                                JsonValueKind.Array => prop.Value.Clone(), // Keep as JsonElement for arrays
-                                _ => prop.Value.Clone()
-                            };
-                            
-                            entry[prop.Name] = value;
-                        }
-                        
-                        contextEntries.Add(entry);
-                    }
-                    
-                    Console.WriteLine($"[A2UIButton] ✓ Manually parsed IList, count: {contextEntries.Count}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"[A2UIButton] ❌ Failed to convert IList: {ex.Message}");
-                }
-            }
-            // Handle direct List<Dictionary> (unlikely but possible)
-            else if (contextObj is List<Dictionary<string, object>> directList)
-            {
-                contextEntries = directList;
-                Console.WriteLine($"[A2UIButton] Context is direct List<Dictionary>, count: {contextEntries.Count}");
-            }
-            else
-            {
-                Console.WriteLine($"[A2UIButton] ❌ Context type unsupported: {contextObj?.GetType().FullName ?? "null"}");
-            }
-            
-            // Resolve the context if we successfully parsed it
-            if (contextEntries != null && contextEntries.Count > 0)
-            {
-                Console.WriteLine($"[A2UIButton] Calling ResolveActionContext with dataContextPath: '{Component.DataContextPath}'");
-                context = BindingResolver.ResolveActionContext(contextEntries, SurfaceId, Component.DataContextPath);
-                Console.WriteLine($"[A2UIButton] ✓ Resolved context keys: {string.Join(", ", context.Keys)}");
-            }
-        }
-        else
-        {
-            Console.WriteLine($"[A2UIButton] No context found in ActionData");
-        }
+        var context = ResolveActionContext();
 
         // Create and dispatch user action
-        Console.WriteLine($"[A2UIButton] Dispatching user action: {actionName}");
         var userAction = EventDispatcher.CreateUserAction(
             actionName,
             SurfaceId,
@@ -160,6 +52,106 @@
         );
 
         EventDispatcher.DispatchUserAction(userAction);
+    }
+
+    /// <summary>
+    /// Resolves the action context from ActionData.
+    /// </summary>
+    private Dictionary<string, object> ResolveActionContext()
+    {
+        if (!ActionData!.TryGetValue("context", out var contextObj))
+        {
+            return new Dictionary<string, object>();
+        }
+
+        var contextEntries = ParseContextEntries(contextObj);
+        
+        if (contextEntries != null && contextEntries.Count > 0)
+        {
+            return BindingResolver.ResolveActionContext(contextEntries, SurfaceId, Component.DataContextPath);
+        }
+
+        return new Dictionary<string, object>();
+    }
+
+    /// <summary>
+    /// Parses context object into a list of entries, handling various JSON deserialization formats.
+    /// </summary>
+    private List<Dictionary<string, object>>? ParseContextEntries(object contextObj)
+    {
+        // Handle JsonElement (from JSON deserialization)
+        if (contextObj is JsonElement jsonElement)
+        {
+            if (jsonElement.ValueKind == JsonValueKind.Array)
+            {
+                try
+                {
+                    return JsonSerializer.Deserialize<List<Dictionary<string, object>>>(jsonElement.GetRawText());
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[A2UIButton] Error deserializing JsonElement context: {ex.Message}");
+                }
+            }
+        }
+        // Handle List<object> (common case from JSON deserialization)
+        else if (contextObj is System.Collections.IList list)
+        {
+            return ParseListContext(list);
+        }
+        // Handle direct List<Dictionary> (unlikely but possible)
+        else if (contextObj is List<Dictionary<string, object>> directList)
+        {
+            return directList;
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Parses IList context, converting JsonElement values to proper CLR types.
+    /// </summary>
+    private List<Dictionary<string, object>>? ParseListContext(System.Collections.IList list)
+    {
+        try
+        {
+            var json = JsonSerializer.Serialize(list);
+            using var doc = JsonDocument.Parse(json);
+            var array = doc.RootElement;
+
+            var result = new List<Dictionary<string, object>>();
+
+            foreach (var item in array.EnumerateArray())
+            {
+                var entry = new Dictionary<string, object>();
+
+                foreach (var prop in item.EnumerateObject())
+                {
+                    // Convert JsonElement to appropriate CLR type
+                    object value = prop.Value.ValueKind switch
+                    {
+                        JsonValueKind.String => prop.Value.GetString()!,
+                        JsonValueKind.Number => prop.Value.GetDouble(),
+                        JsonValueKind.True => true,
+                        JsonValueKind.False => false,
+                        JsonValueKind.Object => prop.Value.Clone(), // Keep as JsonElement for nested objects
+                        JsonValueKind.Array => prop.Value.Clone(), // Keep as JsonElement for arrays
+                        _ => prop.Value.Clone()
+                    };
+
+                    entry[prop.Name] = value;
+                }
+
+                result.Add(entry);
+            }
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[A2UIButton] Error converting IList context: {ex.Message}");
+            return null;
+        }
     }
 
     protected override string GetCssClass()
