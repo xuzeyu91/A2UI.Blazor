@@ -1,0 +1,475 @@
+﻿@page "/wechat"
+@using A2UI.Core.Processing
+@using A2UI.Core.Messages
+@using A2UI.Sample.BlazorServer.Services
+@rendermode InteractiveServer
+@inject A2AClientService A2AClient
+@inject EventDispatcher EventDispatcher
+@inject IJSRuntime JS
+@implements IDisposable
+
+<PageTitle>A2UI for Blazor</PageTitle>
+
+<div class="page-bg">
+  <div class="chat-card">
+    <header class="chat-header">
+      <span class="title">A2UI for Blazor</span>
+      <div class="header-right">
+        @if (_isLoading)
+        {
+          <span class="loading-text">Agent 正在思考...</span>
+        }
+        <i class="icon-speaker @(isMuted ? "muted" : "")" @onclick="ToggleMute" title="@(isMuted ? "开启声音" : "静音")">
+          @if (isMuted)
+          {
+            <svg id="icon-sound-guanbi" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" width="24" height="24">
+              <path d="M3.99991 11L8.24266 13.5457C8.57592 13.7456 8.99991 13.5056 8.99991 13.1169V2.8831C8.99991 2.49445 8.57592 2.25439 8.24266 2.45435L3.99991 5H2.10473C1.77358 5 1.50504 5.26829 1.50473 5.59944L1.50024 10.3994C1.49993 10.731 1.76865 11 2.10024 11H3.99991ZM4.99991 5.56619L7.99991 3.76619V12.2338L4.99991 10.4338V5.56619ZM3.99991 10H2.50062L2.50435 6H3.99991V10Z" fill="currentColor" fill-opacity=".9"></path>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M10.75 5.54285L12.5 7.29285L14.25 5.54285L14.9571 6.24995L13.2071 7.99995L14.9571 9.74995L14.25 10.4571L12.5 8.70706L10.75 10.4571L10.0429 9.74995L11.7929 7.99995L10.0429 6.24995L10.75 5.54285Z" fill="currentColor"></path>
+            </svg>
+          }
+          else
+          {
+            <svg id="icon-sound" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" width="24" height="24">
+              <path d="M3.99966 11L8.24241 13.5457C8.57568 13.7456 8.99966 13.5056 8.99966 13.1169V2.8831C8.99966 2.49445 8.57568 2.25439 8.24241 2.45435L3.99966 5H2.10448C1.77333 5 1.50479 5.26829 1.50448 5.59944L1.5 10.3994C1.49969 10.731 1.76841 11 2.1 11H3.99966ZM4.99966 5.56619L7.99966 3.76619V12.2338L4.99966 10.4338V5.56619ZM3.99966 10H2.50037L2.50411 6H3.99966V10Z" fill="rgb(7, 192, 95)" fill-opacity=".9"></path>
+              <path d="M13.5147 5.72686C13.1938 5.00368 12.7213 4.34191 12.1206 3.78131L12.803 3.05025C13.4994 3.70026 14.0518 4.47194 14.4288 5.32122C14.8057 6.1705 14.9997 7.08075 14.9997 8C14.9997 8.91925 14.8057 9.8295 14.4288 10.6788C14.0518 11.5281 13.4994 12.2997 12.803 12.9497L12.1206 12.2187C12.7213 11.6581 13.1938 10.9963 13.5147 10.2731C13.8356 9.55017 13.9997 8.77797 13.9997 8C13.9997 7.22203 13.8356 6.44984 13.5147 5.72686Z" fill="rgb(7, 192, 95)" fill-opacity=".9"></path>
+              <path d="M11.4997 8.00027C11.5005 7.12735 11.14 6.24663 10.4272 5.54638L11.128 4.83301C12.0228 5.71203 12.5007 6.84639 12.4997 8.00113C12.4987 9.15589 12.0188 10.2897 11.1224 11.1675L10.4228 10.453C11.137 9.75363 11.499 8.87324 11.4997 8.00027Z" fill="rgb(7, 192, 95)" fill-opacity=".9"></path>
+            </svg>
+          }
+        </i>
+      </div>
+    </header>
+
+    <div class="chat-body" @ref="chatBodyRef">
+      @foreach (var msg in Messages)
+      {
+        <div class="message-group @(msg.IsMe ? "me" : "bot")">
+          @if (!string.IsNullOrEmpty(msg.TimeStr))
+          {
+            <div class="time-stamp">@msg.TimeStr</div>
+          }
+          <div class="bubble @(msg.SurfaceId != null ? "ui-bubble" : "")">
+            @if (msg.SurfaceId != null)
+            {
+              @* 核心：渲染 A2UI 动态生成的界面 *@
+              <div class="a2ui-surface-wrapper">
+                <A2UISurface SurfaceId="@msg.SurfaceId" @key="@msg.SurfaceId" />
+              </div>
+            }
+            else
+            {
+              @((MarkupString)msg.HtmlContent)
+            }
+
+            @if (msg.IsMe)
+            {
+              <div class="triangle"></div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <footer class="chat-footer">
+      <div class="toolbar">
+        <span class="tool-icon" title="显示联系人" @onclick='() => SendMessage("显示联系人")'>联系人</span>
+        <span class="tool-icon" title="显示餐厅" @onclick='() => SendMessage("显示餐厅")'>餐厅</span>
+        <span class="tool-icon" title="显示按钮" @onclick='() => SendMessage("显示按钮")'>按钮</span>
+        <span class="tool-icon" title="显示卡片" @onclick='() => SendMessage("显示卡片")'>卡片</span>
+        <span class="tool-icon" title="显示表单" @onclick='() => SendMessage("显示表单")'>表单</span>
+        <span class="tool-icon" title="显示产品" @onclick='() => SendMessage("显示产品")'>产品</span>
+        <span class="tool-icon" title="显示仪表盘" @onclick='() => SendMessage("显示仪表盘")'>仪表盘</span>
+        <span class="tool-icon" title="显示通知" @onclick='() => SendMessage("显示通知")'>通知</span>
+        <span class="tool-icon" title="显示用户资料" @onclick='() => SendMessage("显示用户资料")'>用户资料</span>
+        <span class="tool-icon" title="显示媒体" @onclick='() => SendMessage("显示媒体")'>媒体</span>
+        <span class="tool-icon" title="高级输入" @onclick='() => SendMessage("显示高级输入")'>高级输</span>
+        <span class="tool-icon" title="显示标签页" @onclick='() => SendMessage("显示标签页")'>标签页</span>
+        <span class="tool-icon" title="显示模态框" @onclick='() => SendMessage("显示模态框")'>模态框</span>
+      </div>
+      <div class="input-area">
+        <textarea @bind="currentInput"
+                  @bind:event="oninput"
+                  @onkeydown="HandleKeyDown"
+                  @ref="inputElement"
+                  rows="3"
+                  placeholder="请输入内容，试试 '显示卡片'..."
+                  disabled="@_isLoading"></textarea>
+        <button class="btn-send @(string.IsNullOrEmpty(currentInput) || _isLoading ? "" : "active")"
+                @onclick="SendCurrentQuery"
+                disabled="@(_isLoading)">
+          @( _isLoading ? "..." : "发送")
+        </button>
+      </div>
+      <div class="footer-bottom">2026 A2UI Ecosystem</div>
+    </footer>
+  </div>
+</div>
+
+@code {
+  private string currentInput = "";
+  private bool isMuted = false;
+  private bool _isLoading = false;
+  private int _surfaceCounter = 0;
+  private ElementReference inputElement;
+  private ElementReference chatBodyRef;
+  private List<MsgItem> Messages = new List<MsgItem>();
+
+  protected override void OnInitialized()
+  {
+    // 1. 订阅 A2UI 组件发出的交互动作
+    EventDispatcher.UserActionDispatched += OnUserAction;
+
+    Messages.Add(new MsgItem
+    {
+      TimeStr = DateTime.Now.ToString("HH:mm"),
+      HtmlContent = "👋 你好！我是 A2UI Agent。我可以为你动态生成界面。试试输入：<b>显示仪表盘</b> 或 <b>显示联系人</b>",
+      IsMe = false
+    });
+  }
+
+  private void ToggleMute() => isMuted = !isMuted;
+
+  // 处理 UI 组件（如 A2UI 生成的按钮）点击事件
+  private void OnUserAction(object? sender, UserActionEventArgs e)
+  {
+    InvokeAsync(async () =>
+    {
+      // 处理本地 UI 逻辑（开关模态框等）
+      if (HandleLocalAction(e.Action))
+      {
+        StateHasChanged();
+        return;
+      }
+
+      // 将动作反馈给 Agent
+      var actionText = $"[动作] {e.Action.Name}";
+      await ProcessAgentQuery(actionText);
+
+      await SendMessage(actionText);
+    });
+  }
+
+  private bool HandleLocalAction(UserActionMessage action)
+  {
+    switch (action.Name)
+    {
+      case "open_modal":
+        EventDispatcher.DispatchDataUpdate(EventDispatcher.CreateDataUpdate(action.SurfaceId, action.SourceComponentId, "ui/modalOpen", true));
+        return true;
+      case "close_modal":
+        EventDispatcher.DispatchDataUpdate(EventDispatcher.CreateDataUpdate(action.SurfaceId, action.SourceComponentId, "ui/modalOpen", false));
+        return true;
+      default: return false;
+    }
+  }
+
+  private async Task SendCurrentQuery()
+  {
+    if (string.IsNullOrWhiteSpace(currentInput) || _isLoading)
+      return;
+
+    await SendMessage(currentInput);
+
+
+    currentInput = "";
+  }
+
+  private async Task SendMessage(string query)
+  {
+    if (string.IsNullOrWhiteSpace(query) || _isLoading) return;
+    var userText = query;
+
+    // 添加用户消息
+    Messages.Add(new MsgItem { HtmlContent = userText, IsMe = true, TimeStr = DateTime.Now.ToString("HH:mm") });
+    if (!isMuted) await JS.InvokeVoidAsync("chatInterop.playSent");
+    await Scroll();
+
+    // await JS.InvokeVoidAsync("chatInterop.focusElement", inputElement);
+    // await inputElement.FocusAsync();
+
+    // 请求 Agent 生成响应
+    await ProcessAgentQuery(userText);
+
+
+    // 3. 稍微等待一个微小的 Task，确保浏览器完成 DOM 渲染循环
+    await Task.Yield();
+
+    // 4. 执行聚焦
+    await inputElement.FocusAsync();
+  }
+
+  private async Task ProcessAgentQuery(string query)
+  {
+    _isLoading = true;
+    StateHasChanged();
+
+    try
+    {
+      _surfaceCounter++;
+      var surfaceId = $"surf-{_surfaceCounter}";
+
+      // 调用 Agent 接口
+      var response = await A2AClient.SendQueryAsync(query, surfaceId);
+
+      if (response != null && response.Any())
+      {
+        // 如果返回了 A2UI 消息，添加一个带有 SurfaceId 的气泡
+        Messages.Add(new MsgItem { SurfaceId = surfaceId, IsMe = false });
+      }
+      else
+      {
+        Messages.Add(new MsgItem { HtmlContent = "Agent 未能生成有效的 UI 协议。", IsMe = false });
+      }
+
+      if (!isMuted) await JS.InvokeVoidAsync("chatInterop.playReceived");
+    }
+    catch (Exception ex)
+    {
+      Messages.Add(new MsgItem { HtmlContent = $"❌ Error: {ex.Message}", IsMe = false });
+    }
+    finally
+    {
+      _isLoading = false;
+      StateHasChanged();
+      await Scroll();
+    }
+  }
+
+  private async Task HandleKeyDown(KeyboardEventArgs e)
+  {
+    if (e.Key == "Enter" && !e.ShiftKey) await SendCurrentQuery();
+  }
+
+  private async Task Scroll() => await JS.InvokeVoidAsync("chatInterop.scrollToBottom", chatBodyRef);
+
+  public void Dispose() => EventDispatcher.UserActionDispatched -= OnUserAction;
+
+  public class MsgItem
+  {
+    public string? TimeStr { get; set; }
+    public string? HtmlContent { get; set; }
+    public string? SurfaceId { get; set; } // 新增：用于渲染动态 UI
+    public bool IsMe { get; set; }
+  }
+}
+
+<style>
+  /* 在原有样式基础上补充 UI 气泡特有样式 */
+  .ui-bubble {
+    background: #fff !important; /* UI 界面通常用白色背景 */
+    border: 1px solid #e0e0e0;
+    max-width: 85% !important;
+    padding: 10px !important;
+    width: 500px; /* 默认宽度，可由内容撑开 */
+  }
+
+  .a2ui-surface-wrapper {
+    width: 100%;
+    min-height: 50px;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  .loading-text {
+    font-size: 12px;
+    color: #07c160;
+    margin-right: 10px;
+    animation: blink 1.5s infinite;
+  }
+
+  @@keyframes blink {
+    0% {
+      opacity: 0.3;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0.3;
+    }
+  }
+
+  /* 保持原有样式不变... */
+  .page-bg {
+    background: #f0f2f5;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Microsoft YaHei", sans-serif;
+  }
+
+  .chat-card {
+    width: 850px;
+    height: 90%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .chat-header {
+    padding: 18px 25px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+    .chat-header .title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .icon-speaker {
+    cursor: pointer;
+    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+  }
+
+  .chat-body {
+    flex: 1;
+    overflow-y: auto;
+    background: #fff;
+    padding: 25px 40px;
+    scroll-behavior: smooth;
+  }
+
+  .message-group {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .time-stamp {
+    text-align: center;
+    color: #b2b2b2;
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+
+  .bubble {
+    max-width: 75%;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  }
+
+  .bot .bubble {
+    background: #eff5ff;
+    align-self: flex-start;
+    color: #333;
+    border-top-left-radius: 2px;
+  }
+
+  .me {
+    align-items: flex-end;
+  }
+
+    .me .bubble {
+      background: #07c160;
+      color: white;
+      border-top-right-radius: 2px;
+    }
+
+    .me .triangle {
+      position: absolute;
+      right: -7px;
+      top: 10px;
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 8px solid #07c160;
+    }
+
+  .chat-footer {
+    background: #f8f9fa;
+    border-top: 1px solid #f0f0f0;
+    padding: 15px 25px;
+  }
+
+  .chat-footer toolbar{
+    margin: 15px 0px;
+  }
+
+  .input-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+    .input-area textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      resize: none;
+      font-size: 15px;
+      color: #333;
+      background: transparent;
+    }
+
+  .btn-send {
+    background: #f0f0f0;
+    color: #bbb;
+    border: none;
+    padding: 8px 28px;
+    border-radius: 6px;
+    cursor: not-allowed;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: all 0.2s;
+  }
+
+    .btn-send.active {
+      background: #07c160;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(7,193,96,0.2);
+    }
+
+  .footer-bottom {
+    text-align: center;
+    font-size: 12px;
+    color: #ddd;
+    margin-top: 20px;
+  }
+</style>
+<script>
+  const sentSound = new Audio('https://res.wx.qq.com/mmspraiweb_node/dist/static/sound/sent-message.ogg');
+  const receivedSound = new Audio('https://res.wx.qq.com/mmspraiweb_node/dist/static/sound/message.ogg');
+
+  window.chatInterop = {
+      playSent: () => { sentSound.currentTime = 0; sentSound.play(); },
+      playReceived: () => { receivedSound.currentTime = 0; receivedSound.play(); },
+      focusElement: (el) => { if (el) el.focus(); },
+      focusMessageInput : () => {
+          const inputBox = document.getElementById('messageInputBox');
+          if (inputBox) {
+              inputBox.focus(); // 主动获取焦点
+          }
+      },
+      scrollToBottom: (el) => {
+          if (el) {
+              // 使用 requestAnimationFrame 确保在 DOM 更新后滚动
+              requestAnimationFrame(() => {
+                  el.scrollTop = el.scrollHeight;
+              });
+          }
+      }
+  };
+</script>
