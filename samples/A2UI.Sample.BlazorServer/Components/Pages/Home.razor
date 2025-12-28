@@ -3,652 +3,655 @@
 <PageTitle>A2UI.Blazor - Agent 驱动的动态 UI | Blazor A2UI 协议实现</PageTitle>
 
 <HeadContent>
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="A2UI.Blazor 是基于 Google A2UI 协议的 .NET Blazor 实现，让 AI Agent 动态生成原生、安全、交互式的用户界面。支持声明式 UI、数据绑定、多平台渲染。" />
-    <meta name="keywords" content="A2UI, Blazor, .NET, AI Agent, 动态UI, 声明式UI, Agent to UI, Google A2UI, C#" />
-    <meta name="author" content="xuzeyu" />
-    <meta name="robots" content="index, follow" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://a2ui.xuzeyu.com/" />
-    <meta property="og:title" content="A2UI.Blazor - Agent 驱动的动态 UI" />
-    <meta property="og:description" content="基于 Google A2UI 协议的 .NET Blazor 实现，让 AI Agent 动态生成原生、安全、交互式的用户界面。" />
-    <meta property="og:site_name" content="A2UI.Blazor" />
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://a2ui.xuzeyu.com/" />
-    <meta name="twitter:title" content="A2UI.Blazor - Agent 驱动的动态 UI" />
-    <meta name="twitter:description" content="基于 Google A2UI 协议的 .NET Blazor 实现，让 AI Agent 动态生成原生、安全、交互式的用户界面。" />
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://a2ui.xuzeyu.com/" />
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="A2UI.Blazor 是基于 Google A2UI 协议的 .NET Blazor 实现，让 AI Agent 动态生成原生、安全、交互式的用户界面。支持声明式 UI、数据绑定、多平台渲染。" />
+  <meta name="keywords" content="A2UI, Blazor, .NET, AI Agent, 动态UI, 声明式UI, Agent to UI, Google A2UI, C#" />
+  <meta name="author" content="xuzeyu" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://a2ui.xuzeyu.com/" />
+  <meta property="og:title" content="A2UI.Blazor - Agent 驱动的动态 UI" />
+  <meta property="og:description" content="基于 Google A2UI 协议的 .NET Blazor 实现，让 AI Agent 动态生成原生、安全、交互式的用户界面。" />
+  <meta property="og:site_name" content="A2UI.Blazor" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://a2ui.xuzeyu.com/" />
+  <meta name="twitter:title" content="A2UI.Blazor - Agent 驱动的动态 UI" />
+  <meta name="twitter:description" content="基于 Google A2UI 协议的 .NET Blazor 实现，让 AI Agent 动态生成原生、安全、交互式的用户界面。" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://a2ui.xuzeyu.com/" />
 </HeadContent>
 
 <div class="home-container">
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title">
-                <span class="gradient-text">A2UI for Blazor</span>
-            </h1>
-            <p class="hero-subtitle">
-                基于 Google A2UI 协议的 .NET Blazor 实现<br/>
-                让 AI Agent 动态生成原生、安全、交互式的用户界面
-            </p>
-            <div class="hero-actions">
-                <a href="/a2ui-demo" class="btn btn-primary">
-                    🚀 体验 Demo
-                </a>
-                <a href="https://github.com/xuzeyu91/A2UI.Blazor" target="_blank" class="btn btn-secondary">
-                    <svg style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;" viewBox="0 0 16 16" fill="currentColor">
-                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
-                    </svg>
-                    GitHub 仓库
-                </a>
-                <a href="https://github.com/google/a2ui" target="_blank" class="btn btn-secondary">
-                    📖 了解协议
-                </a>
-            </div>
-        </div>
-    </section>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span class="gradient-text">A2UI for Blazor</span>
+      </h1>
+      <p class="hero-subtitle">
+        基于 Google A2UI 协议的 .NET Blazor 实现<br />
+        让 AI Agent 动态生成原生、安全、交互式的用户界面
+      </p>
+      <div class="hero-actions">
+        <a href="/a2ui-demo" class="btn btn-primary">
+          🚀 体验 Demo
+        </a>
+        <a href="/wechat" class="btn btn-primary">
+          🚀 仿微信客服 Demo
+        </a>
+        <a href="https://github.com/xuzeyu91/A2UI.Blazor" target="_blank" class="btn btn-secondary">
+          <svg style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+          </svg>
+          GitHub 仓库
+        </a>
+        <a href="https://github.com/google/a2ui" target="_blank" class="btn btn-secondary">
+          📖 了解协议
+        </a>
+      </div>
+    </div>
+  </section>
 
-    <!-- What is A2UI -->
-    <section class="section">
-        <h2 class="section-title">🤔 什么是 A2UI？</h2>
-        <div class="content-card">
-            <p class="lead">
-                <strong>A2UI (Agent to UI)</strong> 是一个声明式 UI 协议，用于代理驱动的界面。
-                AI 代理生成丰富的交互式 UI，可在各个平台（Web、移动、桌面）上原生渲染，而无需执行任意代码。
-            </p>
-        </div>
-    </section>
+  <!-- What is A2UI -->
+  <section class="section">
+    <h2 class="section-title">🤔 什么是 A2UI？</h2>
+    <div class="content-card">
+      <p class="lead">
+        <strong>A2UI (Agent to UI)</strong> 是一个声明式 UI 协议，用于代理驱动的界面。
+        AI 代理生成丰富的交互式 UI，可在各个平台（Web、移动、桌面）上原生渲染，而无需执行任意代码。
+      </p>
+    </div>
+  </section>
 
-    <!-- Core Features -->
-    <section class="section">
-        <h2 class="section-title">✨ 核心特性</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🔒</div>
-                <h3>安全性</h3>
-                <p>
-                    声明式数据，而非代码。代理从客户端的可信目录请求组件。
-                    <strong>无代码执行风险</strong>，确保应用安全。
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>原生体验</h3>
-                <p>
-                    无 iframe，客户端使用自己的 UI 框架渲染。
-                    继承应用样式、<strong>可访问性</strong>和性能优势。
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🌍</div>
-                <h3>可移植性</h3>
-                <p>
-                    一个代理响应可在任何地方工作。相同的 JSON 可在
-                    <strong>Web、移动、桌面</strong>平台渲染。
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎨</div>
-                <h3>动态界面</h3>
-                <p>
-                    AI Agent 根据用户需求<strong>实时生成</strong>界面，
-                    无需预先定义所有 UI 组件和布局。
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔄</div>
-                <h3>数据绑定</h3>
-                <p>
-                    支持<strong>双向数据绑定</strong>，表单输入自动同步，
-                    列表数据动态渲染，状态管理简单高效。
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🧩</div>
-                <h3>组件丰富</h3>
-                <p>
-                    支持 <strong>15+ 标准组件</strong>：按钮、卡片、表单、列表、
-                    选项卡、模态框、多媒体等。
-                </p>
-            </div>
-        </div>
-    </section>
+  <!-- Core Features -->
+  <section class="section">
+    <h2 class="section-title">✨ 核心特性</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>安全性</h3>
+        <p>
+          声明式数据，而非代码。代理从客户端的可信目录请求组件。
+          <strong>无代码执行风险</strong>，确保应用安全。
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>原生体验</h3>
+        <p>
+          无 iframe，客户端使用自己的 UI 框架渲染。
+          继承应用样式、<strong>可访问性</strong>和性能优势。
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>可移植性</h3>
+        <p>
+          一个代理响应可在任何地方工作。相同的 JSON 可在
+          <strong>Web、移动、桌面</strong>平台渲染。
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>动态界面</h3>
+        <p>
+          AI Agent 根据用户需求<strong>实时生成</strong>界面，
+          无需预先定义所有 UI 组件和布局。
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>数据绑定</h3>
+        <p>
+          支持<strong>双向数据绑定</strong>，表单输入自动同步，
+          列表数据动态渲染，状态管理简单高效。
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧩</div>
+        <h3>组件丰富</h3>
+        <p>
+          支持 <strong>15+ 标准组件</strong>：按钮、卡片、表单、列表、
+          选项卡、模态框、多媒体等。
+        </p>
+      </div>
+    </div>
+  </section>
 
-    <!-- How It Works -->
-    <section class="section">
-        <h2 class="section-title">🔧 工作原理</h2>
-        <div class="workflow-card">
-            <div class="workflow-steps">
-                <div class="workflow-step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h4>用户输入</h4>
-                        <p>用户通过自然语言描述需求</p>
-                    </div>
-                </div>
-                <div class="workflow-arrow">→</div>
-                <div class="workflow-step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h4>Agent 处理</h4>
-                        <p>AI Agent (LLM) 理解意图</p>
-                    </div>
-                </div>
-                <div class="workflow-arrow">→</div>
-                <div class="workflow-step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h4>生成 A2UI JSON</h4>
-                        <p>Agent 返回 UI 声明数据</p>
-                    </div>
-                </div>
-                <div class="workflow-arrow">→</div>
-                <div class="workflow-step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h4>原生渲染</h4>
-                        <p>Blazor 组件动态渲染界面</p>
-                    </div>
-                </div>
-            </div>
+  <!-- How It Works -->
+  <section class="section">
+    <h2 class="section-title">🔧 工作原理</h2>
+    <div class="workflow-card">
+      <div class="workflow-steps">
+        <div class="workflow-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>用户输入</h4>
+            <p>用户通过自然语言描述需求</p>
+          </div>
         </div>
-    </section>
-
-    <!-- Use Cases -->
-    <section class="section">
-        <h2 class="section-title">💡 应用场景</h2>
-        <div class="use-cases-grid">
-            <div class="use-case-card">
-                <div class="use-case-icon">💬</div>
-                <h3>智能客服</h3>
-                <p>根据用户问题动态生成表单、卡片、列表等界面</p>
-            </div>
-            <div class="use-case-card">
-                <div class="use-case-icon">📊</div>
-                <h3>数据可视化</h3>
-                <p>AI Agent 根据数据自动选择最佳展示方式</p>
-            </div>
-            <div class="use-case-card">
-                <div class="use-case-icon">🛍️</div>
-                <h3>电商推荐</h3>
-                <p>个性化商品展示，动态生成购物界面</p>
-            </div>
-            <div class="use-case-card">
-                <div class="use-case-icon">📝</div>
-                <h3>表单构建器</h3>
-                <p>AI 根据需求自动生成复杂表单和验证逻辑</p>
-            </div>
-            <div class="use-case-card">
-                <div class="use-case-icon">🎮</div>
-                <h3>游戏 UI</h3>
-                <p>根据游戏状态动态生成任务、商店等界面</p>
-            </div>
-            <div class="use-case-card">
-                <div class="use-case-icon">🏢</div>
-                <h3>企业管理</h3>
-                <p>根据权限和角色动态生成管理后台</p>
-            </div>
+        <div class="workflow-arrow">→</div>
+        <div class="workflow-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Agent 处理</h4>
+            <p>AI Agent (LLM) 理解意图</p>
+          </div>
         </div>
-    </section>
-
-    <!-- Components -->
-    <section class="section">
-        <h2 class="section-title">🧩 支持的组件</h2>
-        <div class="components-grid">
-            <div class="component-tag">📝 Text</div>
-            <div class="component-tag">🔘 Button</div>
-            <div class="component-tag">📇 Card</div>
-            <div class="component-tag">📐 Row/Column</div>
-            <div class="component-tag">✍️ TextField</div>
-            <div class="component-tag">☑️ CheckBox</div>
-            <div class="component-tag">📅 DateTimeInput</div>
-            <div class="component-tag">🎚️ Slider</div>
-            <div class="component-tag">🔘 MultipleChoice</div>
-            <div class="component-tag">📋 List</div>
-            <div class="component-tag">📑 Tabs</div>
-            <div class="component-tag">🪟 Modal</div>
-            <div class="component-tag">🖼️ Image</div>
-            <div class="component-tag">⭐ Icon</div>
-            <div class="component-tag">🎬 Video</div>
-            <div class="component-tag">🎵 Audio</div>
-            <div class="component-tag">➖ Divider</div>
+        <div class="workflow-arrow">→</div>
+        <div class="workflow-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>生成 A2UI JSON</h4>
+            <p>Agent 返回 UI 声明数据</p>
+          </div>
         </div>
-    </section>
+        <div class="workflow-arrow">→</div>
+        <div class="workflow-step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h4>原生渲染</h4>
+            <p>Blazor 组件动态渲染界面</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Quick Start -->
-    <section class="section">
-        <h2 class="section-title">🚀 快速开始</h2>
-        <div class="quickstart-card">
-            <div class="code-example">
-                <div class="code-header">1. 安装项目引用</div>
-                <pre><code>&lt;ItemGroup&gt;
+  <!-- Use Cases -->
+  <section class="section">
+    <h2 class="section-title">💡 应用场景</h2>
+    <div class="use-cases-grid">
+      <div class="use-case-card">
+        <div class="use-case-icon">💬</div>
+        <h3>智能客服</h3>
+        <p>根据用户问题动态生成表单、卡片、列表等界面</p>
+      </div>
+      <div class="use-case-card">
+        <div class="use-case-icon">📊</div>
+        <h3>数据可视化</h3>
+        <p>AI Agent 根据数据自动选择最佳展示方式</p>
+      </div>
+      <div class="use-case-card">
+        <div class="use-case-icon">🛍️</div>
+        <h3>电商推荐</h3>
+        <p>个性化商品展示，动态生成购物界面</p>
+      </div>
+      <div class="use-case-card">
+        <div class="use-case-icon">📝</div>
+        <h3>表单构建器</h3>
+        <p>AI 根据需求自动生成复杂表单和验证逻辑</p>
+      </div>
+      <div class="use-case-card">
+        <div class="use-case-icon">🎮</div>
+        <h3>游戏 UI</h3>
+        <p>根据游戏状态动态生成任务、商店等界面</p>
+      </div>
+      <div class="use-case-card">
+        <div class="use-case-icon">🏢</div>
+        <h3>企业管理</h3>
+        <p>根据权限和角色动态生成管理后台</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Components -->
+  <section class="section">
+    <h2 class="section-title">🧩 支持的组件</h2>
+    <div class="components-grid">
+      <div class="component-tag">📝 Text</div>
+      <div class="component-tag">🔘 Button</div>
+      <div class="component-tag">📇 Card</div>
+      <div class="component-tag">📐 Row/Column</div>
+      <div class="component-tag">✍️ TextField</div>
+      <div class="component-tag">☑️ CheckBox</div>
+      <div class="component-tag">📅 DateTimeInput</div>
+      <div class="component-tag">🎚️ Slider</div>
+      <div class="component-tag">🔘 MultipleChoice</div>
+      <div class="component-tag">📋 List</div>
+      <div class="component-tag">📑 Tabs</div>
+      <div class="component-tag">🪟 Modal</div>
+      <div class="component-tag">🖼️ Image</div>
+      <div class="component-tag">⭐ Icon</div>
+      <div class="component-tag">🎬 Video</div>
+      <div class="component-tag">🎵 Audio</div>
+      <div class="component-tag">➖ Divider</div>
+    </div>
+  </section>
+
+  <!-- Quick Start -->
+  <section class="section">
+    <h2 class="section-title">🚀 快速开始</h2>
+    <div class="quickstart-card">
+      <div class="code-example">
+        <div class="code-header">1. 安装项目引用</div>
+        <pre><code>&lt;ItemGroup&gt;
   &lt;ProjectReference Include="A2UI.Core\A2UI.Core.csproj" /&gt;
   &lt;ProjectReference Include="A2UI.Blazor.Components\*.csproj" /&gt;
   &lt;ProjectReference Include="A2UI.AgentSDK\*.csproj" /&gt;
 &lt;/ItemGroup&gt;</code></pre>
-            </div>
-            
-            <div class="code-example">
-                <div class="code-header">2. 注册服务 (Program.cs)</div>
-                <pre><code>builder.Services.AddScoped&lt;MessageProcessor&gt;();
+      </div>
+
+      <div class="code-example">
+        <div class="code-header">2. 注册服务 (Program.cs)</div>
+        <pre><code>builder.Services.AddScoped&lt;MessageProcessor&gt;();
 builder.Services.AddScoped&lt;EventDispatcher&gt;();
 builder.Services.AddSingleton&lt;ThemeService&gt;();</code></pre>
-            </div>
-            
-            <div class="code-example">
-                <div class="code-header">3. 使用 A2UI Surface</div>
-                <pre><code>&lt;A2UISurface SurfaceId="my-surface" /&gt;</code></pre>
-            </div>
-        </div>
-    </section>
+      </div>
 
-    <!-- Tech Stack -->
-    <section class="section">
-        <h2 class="section-title">🛠️ 技术栈</h2>
-        <div class="tech-stack">
-            <div class="tech-badge">.NET 9.0</div>
-            <div class="tech-badge">Blazor Server</div>
-            <div class="tech-badge">Blazor WebAssembly</div>
-            <div class="tech-badge">SignalR</div>
-            <div class="tech-badge">A2UI 0.8 协议</div>
-        </div>
-    </section>
+      <div class="code-example">
+        <div class="code-header">3. 使用 A2UI Surface</div>
+        <pre><code>&lt;A2UISurface SurfaceId="my-surface" /&gt;</code></pre>
+      </div>
+    </div>
+  </section>
 
-    <!-- Call to Action -->
-    <section class="section cta-section">
-        <div class="cta-card">
-            <h2>准备好体验 AI 驱动的动态 UI 了吗？</h2>
-            <p>立即访问演示页面，通过自然语言与 Agent 交互，看它如何实时生成界面！</p>
-            <a href="/a2ui-demo" class="btn btn-large btn-primary">
-                开始体验 A2UI Demo →
-            </a>
-        </div>
-    </section>
+  <!-- Tech Stack -->
+  <section class="section">
+    <h2 class="section-title">🛠️ 技术栈</h2>
+    <div class="tech-stack">
+      <div class="tech-badge">.NET 9.0</div>
+      <div class="tech-badge">Blazor Server</div>
+      <div class="tech-badge">Blazor WebAssembly</div>
+      <div class="tech-badge">SignalR</div>
+      <div class="tech-badge">A2UI 0.8 协议</div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="section cta-section">
+    <div class="cta-card">
+      <h2>准备好体验 AI 驱动的动态 UI 了吗？</h2>
+      <p>立即访问演示页面，通过自然语言与 Agent 交互，看它如何实时生成界面！</p>
+      <a href="/a2ui-demo" class="btn btn-large btn-primary">
+        开始体验 A2UI Demo →
+      </a>
+    </div>
+  </section>
 </div>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
+  * {
+    box-sizing: border-box;
+  }
 
-    .home-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0;
-        background: #ffffff;
-    }
+  .home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+    background: #ffffff;
+  }
 
-    /* Hero Section */
-    .hero-section {
-        background: linear-gradient(135deg, #8b6cd9 0%, #a58de3 100%);
-        color: white;
-        padding: 80px 20px;
-        text-align: center;
-        border-radius: 0 0 20px 20px;
-        margin-bottom: 60px;
-    }
+  /* Hero Section */
+  .hero-section {
+    background: linear-gradient(135deg, #8b6cd9 0%, #a58de3 100%);
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 60px;
+  }
 
-    .hero-content {
-        max-width: 800px;
-        margin: 0 auto;
-    }
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
 
-    .hero-title {
-        font-size: 48px;
-        font-weight: 700;
-        margin: 0 0 20px 0;
-    }
+  .hero-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+  }
 
-    .gradient-text {
-        background: linear-gradient(to right, #fff, #f0f0ff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
+  .gradient-text {
+    background: linear-gradient(to right, #fff, #f0f0ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-    .hero-subtitle {
-        font-size: 20px;
-        line-height: 1.6;
-        margin: 0 0 40px 0;
-        opacity: 0.95;
-    }
+  .hero-subtitle {
+    font-size: 20px;
+    line-height: 1.6;
+    margin: 0 0 40px 0;
+    opacity: 0.95;
+  }
 
-    .hero-actions {
-        display: flex;
-        gap: 16px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 
-    .btn {
-        padding: 14px 32px;
-        border-radius: 25px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 16px;
-        transition: all 0.3s;
-        display: inline-block;
-    }
+  .btn {
+    padding: 14px 32px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s;
+    display: inline-block;
+  }
 
-    .btn-primary {
-        background: white;
-        color: #7c4ddb;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
+  .btn-primary {
+    background: white;
+    color: #7c4ddb;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  }
 
     .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
 
-    .btn-secondary {
-        background: rgba(255,255,255,0.2);
-        color: white;
-        border: 2px solid white;
-    }
+  .btn-secondary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid white;
+  }
 
     .btn-secondary:hover {
-        background: rgba(255,255,255,0.3);
-        transform: translateY(-2px);
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
     }
 
-    .btn-large {
-        padding: 18px 40px;
-        font-size: 18px;
-    }
+  .btn-large {
+    padding: 18px 40px;
+    font-size: 18px;
+  }
 
-    /* Sections */
-    .section {
-        padding: 60px 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
+  /* Sections */
+  .section {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 
-    .section-title {
-        font-size: 36px;
-        font-weight: 700;
-        text-align: center;
-        margin: 0 0 40px 0;
-        color: #7c4ddb;
-    }
+  .section-title {
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 40px 0;
+    color: #7c4ddb;
+  }
 
-    /* Content Card */
-    .content-card {
-        background: #f8f9fa;
-        padding: 30px;
-        border-radius: 15px;
-        border-left: 5px solid #8b6cd9;
-    }
+  /* Content Card */
+  .content-card {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 15px;
+    border-left: 5px solid #8b6cd9;
+  }
 
-    .lead {
-        font-size: 18px;
-        line-height: 1.8;
-        color: #555;
-        margin: 0;
-    }
+  .lead {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #555;
+    margin: 0;
+  }
 
-    /* Features Grid */
-    .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 24px;
-    }
+  /* Features Grid */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
 
-    .feature-card {
-        background: white;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.07);
-        transition: all 0.3s;
-        border: 1px solid #e0e0e0;
-    }
+  .feature-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+    transition: all 0.3s;
+    border: 1px solid #e0e0e0;
+  }
 
     .feature-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 15px rgba(139, 108, 217, 0.2);
-        border-color: #8b6cd9;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(139, 108, 217, 0.2);
+      border-color: #8b6cd9;
     }
 
-    .feature-icon {
-        font-size: 48px;
-        margin-bottom: 16px;
-    }
+  .feature-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
 
-    .feature-card h3 {
-        font-size: 22px;
-        color: #7c4ddb;
-        margin: 0 0 12px 0;
-    }
+  .feature-card h3 {
+    font-size: 22px;
+    color: #7c4ddb;
+    margin: 0 0 12px 0;
+  }
 
-    .feature-card p {
-        color: #666;
-        line-height: 1.6;
-        margin: 0;
-    }
+  .feature-card p {
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+  }
 
-    /* Workflow */
-    .workflow-card {
-        background: #f8f9fa;
-        padding: 40px;
-        border-radius: 20px;
-        border: 1px solid #e0e0e0;
-    }
+  /* Workflow */
+  .workflow-card {
+    background: #f8f9fa;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid #e0e0e0;
+  }
 
-    .workflow-steps {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 16px;
-    }
+  .workflow-steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
 
-    .workflow-step {
-        flex: 1;
-        min-width: 200px;
-        background: white;
-        padding: 24px;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
+  .workflow-step {
+    flex: 1;
+    min-width: 200px;
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
 
-    .step-number {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, #8b6cd9 0%, #a58de3 100%);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 20px;
-        margin-bottom: 12px;
-    }
+  .step-number {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #8b6cd9 0%, #a58de3 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
 
-    .step-content h4 {
-        margin: 0 0 8px 0;
-        color: #7c4ddb;
-    }
+  .step-content h4 {
+    margin: 0 0 8px 0;
+    color: #7c4ddb;
+  }
 
-    .step-content p {
-        margin: 0;
-        color: #666;
-        font-size: 14px;
-    }
+  .step-content p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+  }
 
-    .workflow-arrow {
-        font-size: 32px;
-        color: #95a5a6;
-        font-weight: 700;
-    }
+  .workflow-arrow {
+    font-size: 32px;
+    color: #95a5a6;
+    font-weight: 700;
+  }
 
-    /* Use Cases */
-    .use-cases-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-    }
+  /* Use Cases */
+  .use-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
 
-    .use-case-card {
-        background: linear-gradient(135deg, #8b6cd9 0%, #a58de3 100%);
-        color: white;
-        padding: 24px;
-        border-radius: 12px;
-        text-align: center;
-        transition: transform 0.3s;
-    }
+  .use-case-card {
+    background: linear-gradient(135deg, #8b6cd9 0%, #a58de3 100%);
+    color: white;
+    padding: 24px;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s;
+  }
 
     .use-case-card:hover {
-        transform: scale(1.05);
+      transform: scale(1.05);
     }
 
-    .use-case-icon {
-        font-size: 40px;
-        margin-bottom: 12px;
-    }
+  .use-case-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
 
-    .use-case-card h3 {
-        margin: 0 0 8px 0;
-        font-size: 18px;
-    }
+  .use-case-card h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+  }
 
-    .use-case-card p {
-        margin: 0;
-        font-size: 14px;
-        opacity: 0.9;
-    }
+  .use-case-card p {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.9;
+  }
 
-    /* Components Grid */
-    .components-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        justify-content: center;
-    }
+  /* Components Grid */
+  .components-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
 
-    .component-tag {
-        background: white;
-        border: 2px solid #8b6cd9;
-        color: #7c4ddb;
-        padding: 10px 20px;
-        border-radius: 25px;
-        font-weight: 600;
-        transition: all 0.2s;
-    }
+  .component-tag {
+    background: white;
+    border: 2px solid #8b6cd9;
+    color: #7c4ddb;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
 
     .component-tag:hover {
-        background: linear-gradient(135deg, #8b6cd9 0%, #a58de3 100%);
-        color: white;
-        transform: scale(1.05);
+      background: linear-gradient(135deg, #8b6cd9 0%, #a58de3 100%);
+      color: white;
+      transform: scale(1.05);
     }
 
-    /* Quick Start */
-    .quickstart-card {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-    }
+  /* Quick Start */
+  .quickstart-card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
 
-    .code-example {
-        background: #2d3748;
-        border-radius: 12px;
-        overflow: hidden;
-    }
+  .code-example {
+    background: #2d3748;
+    border-radius: 12px;
+    overflow: hidden;
+  }
 
-    .code-header {
-        background: #1a202c;
-        color: #a0aec0;
-        padding: 12px 20px;
-        font-weight: 600;
-        border-bottom: 2px solid #4a5568;
-    }
+  .code-header {
+    background: #1a202c;
+    color: #a0aec0;
+    padding: 12px 20px;
+    font-weight: 600;
+    border-bottom: 2px solid #4a5568;
+  }
 
-    .code-example pre {
-        margin: 0;
-        padding: 20px;
-        overflow-x: auto;
-    }
+  .code-example pre {
+    margin: 0;
+    padding: 20px;
+    overflow-x: auto;
+  }
 
-    .code-example code {
-        color: #68d391;
-        font-family: 'Consolas', 'Monaco', monospace;
-        font-size: 14px;
-        line-height: 1.6;
-    }
+  .code-example code {
+    color: #68d391;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+  }
 
-    /* Tech Stack */
-    .tech-stack {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-        justify-content: center;
-    }
+  /* Tech Stack */
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
 
-    .tech-badge {
-        background: linear-gradient(135deg, #8b6cd9 0%, #a58de3 100%);
-        color: white;
-        padding: 12px 24px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 16px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
+  .tech-badge {
+    background: linear-gradient(135deg, #8b6cd9 0%, #a58de3 100%);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
 
-    /* CTA Section */
-    .cta-section {
-        padding: 80px 20px;
-    }
+  /* CTA Section */
+  .cta-section {
+    padding: 80px 20px;
+  }
 
-    .cta-card {
-        background: linear-gradient(135deg, #8b6cd9 0%, #a58de3 100%);
-        color: white;
-        padding: 60px 40px;
-        border-radius: 20px;
-        text-align: center;
-    }
+  .cta-card {
+    background: linear-gradient(135deg, #8b6cd9 0%, #a58de3 100%);
+    color: white;
+    padding: 60px 40px;
+    border-radius: 20px;
+    text-align: center;
+  }
 
     .cta-card h2 {
-        font-size: 32px;
-        margin: 0 0 16px 0;
+      font-size: 32px;
+      margin: 0 0 16px 0;
     }
 
     .cta-card p {
-        font-size: 18px;
-        margin: 0 0 32px 0;
-        opacity: 0.95;
+      font-size: 18px;
+      margin: 0 0 32px 0;
+      opacity: 0.95;
     }
 
-    /* Responsive */
-    @@media (max-width: 768px) {
-        .hero-title {
-            font-size: 36px;
-        }
-
-        .hero-subtitle {
-            font-size: 18px;
-        }
-
-        .section-title {
-            font-size: 28px;
-        }
-
-        .workflow-steps {
-            flex-direction: column;
-        }
-
-        .workflow-arrow {
-            transform: rotate(90deg);
-        }
-
-        .features-grid,
-        .use-cases-grid {
-            grid-template-columns: 1fr;
-        }
+  /* Responsive */
+  @@media (max-width: 768px) {
+    .hero-title {
+      font-size: 36px;
     }
+
+    .hero-subtitle {
+      font-size: 18px;
+    }
+
+    .section-title {
+      font-size: 28px;
+    }
+
+    .workflow-steps {
+      flex-direction: column;
+    }
+
+    .workflow-arrow {
+      transform: rotate(90deg);
+    }
+
+    .features-grid,
+    .use-cases-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
